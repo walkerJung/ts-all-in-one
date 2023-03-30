@@ -35,6 +35,13 @@
 
 - 함수를 body 없이 타입만 선언해두고 아래 라인에서 타입에 맞는 구현부를 만들어주면 된다. 구현부를 만들기 싫을때는 함수 앞에 declare 를 붙여준다. declare 는 자바스크립트로 변환될때 사라진다.
 
+- any 는 타입 포기, unknown 은 나중에 as 를 사용해서 타입 강화
+- unknown 일때 아니면 as 는 웬만하면 쓰지않는다.
+- typeof, Array.isArray(), instanceof, in, object key 값 등을 사용해서 타입가드 (js 문법)
+- 커스텀 함수로 타입가드를 할수도 있다.
+- {}, Object 는 null, undefined 를 제외한 모든 타입을 뜻한다. (object 와 다른 타입)
+- 옵셔널 (?) 은 속성 뒤에 붙여준다.
+
 ## Type 과 Interface
 
 - type 은 간단한 타입 설정, interface 는 객체지향 타입 설정
@@ -57,3 +64,36 @@
   `const b: B = {breath: true, breed: true};`
 
 - type 중복선언 불가능, interface 중복선언 가능 ( 선언 할때마다 합쳐짐 ) 확장성이 좋음
+
+## readonly, 인덱스드 시그니처, 맵드 타입스
+
+- readonly 는 객체 내부 타입이 바뀌는걸 막아준다.
+
+  `type A = { a: string, b: number };`
+
+  `const a: A = {a: 1, b: 2}; // 변경 불가능`
+
+- 인덱스드 시그니처는 편리하다.
+
+  `type A = { [key: string]: string };`
+
+  `const a: A = {a:'a', b:'b', c:'c'};`
+
+- 맵드 타입스는 더 좁게 사용할수 있다.
+
+  `type B = 'HUMAN' | 'MAMA' | 'PAPA';`
+
+  `type A = {[key in B]: string};`
+
+  `const a: A = {HUMAN: 'human', MAMA: 'mama', PAPA: 'papa'};`
+
+## Type 을 변수화 하는 Generic
+
+- 함수를 호출할때 타입이 정해지게 하기 위해 제네릭을 쓴다.
+- 함수명 뒤에 <> 로 선언한다.
+- 제네릭을 강화하려면 extends 를 사용한다.
+- 제네릭을 여러개 만들면서 각각 다른 제한을 둘수 있다.
+
+  `function add<T extends string, K extends number>(a:T, b: K): T`
+
+  `const add = <T>(a: T):T => a;`

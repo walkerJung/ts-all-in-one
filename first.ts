@@ -38,3 +38,10 @@ const tuple: [number, number, string] = [1, 2, "hello"];
 
 // 원시값 타입
 const isTrue: true = true;
+
+// readonly
+type A = { a: string; b: number };
+
+const ssa: A = { a: 1, b: 2 };
+
+const addd = <T>(a: T): T => a;
